@@ -1,0 +1,13 @@
+body {
+  background: orange;
+  margin: 0;
+  padding: 0;
+}
+
+#main {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  right: 50px;
+  bottom: 50px;
+}
