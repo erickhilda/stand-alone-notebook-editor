@@ -1,27 +1,37 @@
-const path = require('path');
+const { resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devServer: {
-    contentBase: path.join(__dirname, 'build'),
-    compress: true,
-    port: 9000
+  mode: 'development',
+  context: resolve(__dirname, 'src'),
+  entry: {
+    app: ['./index.ts']
   },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build')
+    filename: '[hash].bundle.js',
+    path: resolve(__dirname, 'dist')
   },
-  devtool: "inline-source-map",
-  entry: ['./src/index.ts'],
+  devtool: 'inline-source-map',
   resolve: {
-    extensions: [ '.ts', '.tsx', '.js' ]
+    extensions: ['.ts', '.tsx', '.js']
   },
-  bail: true,
-  mode: 'development',
+  watch: false,
+  devServer: {
+    watchContentBase: false,
+    compress: false,
+    stats: {
+      colors: true
+    },
+    port: 9000
+  },
   module: {
     rules: [
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.html$/, use: 'file-loader' },
-      { test: /\.md$/, use: 'raw-loader' },      {
+      { test: /\.md$/, use: 'raw-loader' }, {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
@@ -41,10 +51,19 @@ module.exports = {
         use: 'url-loader?limit=10000&mimetype=application/octet-stream'
       },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: 'file-loader' },
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'url-loader?limit=10000&mimetype=image/svg+xml'
-      }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      templateParameters: {
+        JUPYTER_BASE_URL: 'http://localhost:8888',
+        JUPYTER_TOKEN: 'abc',
+        JUPYTER_NOTEBOOK_PATH: 'test.ipynb',
+        JUPYTER_MATHJAX_URL: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
+      },
+      template: 'index.html',
+      inject: true,
+
+    })
+  ]
 };
