@@ -57,7 +57,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       templateParameters: {
         JUPYTER_BASE_URL: 'http://localhost:8888',
-        JUPYTER_TOKEN: 'abc',
+        JUPYTER_TOKEN: '6qsyW6PE7ARzdbNPgK2U',
         JUPYTER_NOTEBOOK_PATH: 'test.ipynb',
         JUPYTER_MATHJAX_URL: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'
       },

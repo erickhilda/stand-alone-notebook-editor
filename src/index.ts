@@ -2,7 +2,7 @@ import '@jupyterlab/application/style/index.css';
 import '@jupyterlab/codemirror/style/index.css';
 import '@jupyterlab/notebook/style/index.css';
 import '@jupyterlab/theme-light-extension/style/index.css';
-import '@jupyterlab/terminal/style/index.css';
+// import '@jupyterlab/terminal/style/index.css';
 import '../index.css';
 
 import { CommandRegistry } from '@phosphor/commands';
@@ -10,9 +10,9 @@ import { CommandPalette, SplitPanel, Widget, TabPanel } from '@phosphor/widgets'
 import { ServiceManager } from '@jupyterlab/services';
 import { MathJaxTypesetter } from '@jupyterlab/mathjax2';
 import { PageConfig } from '@jupyterlab/coreutils';
-import { TerminalSession } from '@jupyterlab/services';
+// import { TerminalSession } from '@jupyterlab/services';
 
-import { Terminal } from '@jupyterlab/terminal';
+// import { Terminal } from '@jupyterlab/terminal';
 
 import {
   NotebookPanel, NotebookWidgetFactory, NotebookModelFactory
@@ -114,9 +114,9 @@ async function createApp(manager: ServiceManager.IManager) {
   // Hide the widget when it first loads.
   completer.hide();
 
-  const session = await TerminalSession.startNew();
-  const terminal = new Terminal(session, { theme: 'dark' });
-  terminal.title.closable = true;
+  // const session = await TerminalSession.startNew();
+  // const terminal = new Terminal(session, { theme: 'dark' });
+  // terminal.title.closable = true;
 
   const panel = new SplitPanel();
   panel.id = 'main';
@@ -125,11 +125,9 @@ async function createApp(manager: ServiceManager.IManager) {
 
   SplitPanel.setStretch(palette, 0);
   SplitPanel.setStretch(nbWidget, 1);
-  SplitPanel.setStretch(terminal, 1);
 
   panel.addWidget(palette);
   panel.addWidget(nbWidget);
-  panel.addWidget(terminal);
 
   // Attach the panel to the DOM.
   Widget.attach(panel, document.body);
